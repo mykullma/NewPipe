@@ -24,10 +24,11 @@ import org.schabi.newpipe.DownloaderImpl;
 import org.schabi.newpipe.MainActivity;
 import org.schabi.newpipe.R;
 import org.schabi.newpipe.databinding.ActivityRecaptchaBinding;
-import org.schabi.newpipe.extractor.utils.Utils;
 import org.schabi.newpipe.util.ThemeHelper;
 
 import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 
 /*
  * Created by beneth <bmauduit@beneth.fr> on 06.12.16.
@@ -188,7 +189,7 @@ public class ReCaptchaActivity extends AppCompatActivity {
 
             try {
                 String abuseCookie = url.substring(abuseStart + 13, abuseEnd);
-                abuseCookie = Utils.decodeUrlUtf8(abuseCookie);
+                abuseCookie = URLDecoder.decode(abuseCookie, StandardCharsets.UTF_8.name());
                 handleCookies(abuseCookie);
             } catch (UnsupportedEncodingException | StringIndexOutOfBoundsException e) {
                 if (MainActivity.DEBUG) {
