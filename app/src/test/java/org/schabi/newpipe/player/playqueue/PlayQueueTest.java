@@ -198,4 +198,31 @@ public class PlayQueueTest {
             assertNotEquals(queue1, queue2);
         }
     }
+
+    public static class RemoveItemTests {
+        private PlayQueue queue1;
+        private PlayQueue queue2;
+
+        @Before
+        public void setup() {
+            final List<PlayQueueItem> streams = new ArrayList<>(5);
+            for (int i = 0; i < 5; ++i) {
+                streams.add(makeItemWithUrl("URL_" + i));
+            }
+            queue1 = spy(makePlayQueue(1, streams));
+            queue2 = spy(makePlayQueue(3, streams));
+        }
+
+        @Test
+        public void removeAfterCurrent() {
+            queue1.remove(2);
+            assertEquals(1, queue1.getIndex());
+        }
+
+        @Test
+        public void removeBeforeCurrent() {
+            queue2.remove(2);
+            assertEquals(2, queue2.getIndex());
+        }
+    }
 }
