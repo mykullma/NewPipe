@@ -1,5 +1,6 @@
 package org.schabi.newpipe.player.playqueue;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.spy;
@@ -94,9 +95,11 @@ public class PlayQueueTest2 {
         @Test
         public void case5() {
             nonEmptyQueue.fetch();
+            final PlayQueueItem currentItem = nonEmptyQueue.getItem();
             nonEmptyQueue.shuffle();
             assertTrue(nonEmptyQueue.isComplete());
             assertTrue(nonEmptyQueue.isShuffled());
+            assertEquals(currentItem, nonEmptyQueue.getItem());
         }
 
         @Test
