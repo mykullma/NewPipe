@@ -18,14 +18,19 @@ public class PlayQueueTest2 {
     static PlayQueue makePlayQueue(final int index, final List<PlayQueueItem> streams) {
         // I tried using Mockito, but it didn't work for some reason
         return new PlayQueue(index, streams) {
+            private boolean isComplete;
             @Override
             public boolean isComplete() {
-                throw new UnsupportedOperationException();
+                return isComplete;
             }
-
             @Override
             public void fetch() {
-                throw new UnsupportedOperationException();
+                final List<PlayQueueItem> items = new ArrayList<>(5);
+                for (int i = 5; i < 10; ++i) {
+                    items.add(makeItemWithUrl("URL_" + i));
+                }
+                this.append(items);
+                isComplete = true;
             }
         };
     }
@@ -61,6 +66,13 @@ public class PlayQueueTest2 {
             nonEmptyQueue.shuffle();
             nonEmptyQueue.unshuffle();
             assertFalse(nonEmptyQueue.isShuffled());
+        }
+
+        @Test
+        public void case3() {
+            nonEmptyQueue.shuffle();
+            nonEmptyQueue.fetch();
+            assertTrue(nonEmptyQueue.isComplete());
         }
 
     }
