@@ -50,7 +50,7 @@ public abstract class PlayQueue implements Serializable {
     private transient Flowable<PlayQueueEvent> broadcastReceiver;
     private transient boolean disposed = false;
 
-    PlayQueue(final int index, final List<PlayQueueItem> startWith) {
+    protected PlayQueue(final int index, final List<PlayQueueItem> startWith) {
         streams = new ArrayList<>(startWith);
 
         if (streams.size() > index) {
