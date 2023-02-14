@@ -56,22 +56,55 @@ public class PlayQueueTest2 {
         }
 
         @Test
+        public void case0() {
+            assertFalse(nonEmptyQueue.isComplete());
+            assertFalse(nonEmptyQueue.isShuffled());
+        }
+
+        @Test
         public void case1() {
-            nonEmptyQueue.shuffle();
-            assertTrue(nonEmptyQueue.isShuffled());
+            nonEmptyQueue.fetch();
+            assertTrue(nonEmptyQueue.isComplete());
+            assertFalse(nonEmptyQueue.isShuffled());
         }
 
         @Test
         public void case2() {
             nonEmptyQueue.shuffle();
-            nonEmptyQueue.unshuffle();
-            assertFalse(nonEmptyQueue.isShuffled());
+            nonEmptyQueue.fetch();
+            assertTrue(nonEmptyQueue.isShuffled());
+            assertTrue(nonEmptyQueue.isComplete());
         }
 
         @Test
         public void case3() {
             nonEmptyQueue.shuffle();
+            assertTrue(nonEmptyQueue.isShuffled());
+            assertFalse(nonEmptyQueue.isComplete());
+        }
+
+        @Test
+        public void case4() {
+            nonEmptyQueue.shuffle();
+            nonEmptyQueue.unshuffle();
+            assertFalse(nonEmptyQueue.isShuffled());
+            assertFalse(nonEmptyQueue.isComplete());
+        }
+
+        @Test
+        public void case5() {
             nonEmptyQueue.fetch();
+            nonEmptyQueue.shuffle();
+            assertTrue(nonEmptyQueue.isComplete());
+            assertTrue(nonEmptyQueue.isShuffled());
+        }
+
+        @Test
+        public void case6() {
+            nonEmptyQueue.shuffle();
+            nonEmptyQueue.fetch();
+            nonEmptyQueue.unshuffle();
+            assertFalse(nonEmptyQueue.isShuffled());
             assertTrue(nonEmptyQueue.isComplete());
         }
 
