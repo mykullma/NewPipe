@@ -223,7 +223,6 @@ public class PlayQueueTest {
         public void removeBeforeCurrent() {
             queue2.remove(2);
             assertEquals(2, queue2.getIndex());
-            assertTrue(false);
         }
     }
 }
