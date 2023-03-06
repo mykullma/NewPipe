@@ -44,4 +44,18 @@ public final class ChannelPlayQueue extends AbstractInfoPlayQueue<ChannelInfo> {
                     .subscribe(getNextPageObserver());
         }
     }
+
+    public void fetch(ExtractorHelperFunctions extractorHelper) {
+        if (this.isInitial) {
+            extractorHelper.getChannelInfo(this.serviceId, this.baseUrl, false)
+                    .subscribeOn(extractorHelper.io())
+                    .observeOn(extractorHelper.mainThread())
+                    .subscribe(getHeadListObserver());
+        } else {
+            extractorHelper.getMoreChannelItems(this.serviceId, this.baseUrl, this.nextPage)
+                    .subscribeOn(extractorHelper.io())
+                    .observeOn(extractorHelper.mainThread())
+                    .subscribe(getNextPageObserver());
+        }
+    }
 }
