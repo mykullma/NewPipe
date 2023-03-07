@@ -1,6 +1,8 @@
 package org.schabi.newpipe.player.playqueue;
 
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 import org.junit.Test;
 import org.schabi.newpipe.extractor.ListExtractor;
@@ -53,5 +55,19 @@ public class ChannelPlayQueueTest {
         assertEquals("page", channelPlayQueue.nextPage.getUrl());
         channelPlayQueue.fetch(extractorHelper);
         assertEquals("next page", channelPlayQueue.nextPage.getUrl());
+    }
+
+    @Test
+    public void testGetHeadListObserver() {
+        ChannelPlayQueue queue = new ChannelPlayQueue(0, "", new Page(""), new ArrayList<>(), 0);
+        assertFalse(queue.isComplete());
+
+        // mocking
+        ChannelInfo info = mock(ChannelInfo.class);
+        Single<ChannelInfo> ob = Single.just(info);
+        when(info.hasNextPage()).thenReturn(false);
+
+        ob.subscribe(queue.getHeadListObserver());
+        assertTrue(queue.isComplete());
     }
 }
