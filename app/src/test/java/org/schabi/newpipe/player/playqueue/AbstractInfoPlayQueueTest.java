@@ -41,6 +41,7 @@ public class AbstractInfoPlayQueueTest extends TestCase {
         assertFalse(playQueue.isInitial);
     }
 
+
     @Test
     public void testGetNextPageObserver() {
         playQueue = createPlayQueue();
